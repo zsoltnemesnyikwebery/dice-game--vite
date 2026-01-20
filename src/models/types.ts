@@ -1,9 +1,11 @@
+import type { GAME_STATUS } from "@/lib/constants";
+
 export type DiceRoll = [number, number];
-export type GameStatus =  "not_started" | "in_progress" | "ended";
+export type GameStatus = typeof GAME_STATUS[keyof typeof GAME_STATUS];
 export type Player = {
-  id: string;
+  id: string | undefined;
   name: string;
-  avatar: string;
+  avatar: string | undefined;
   color: string;
   isActive: boolean;
   rolls: DiceRoll | undefined;
