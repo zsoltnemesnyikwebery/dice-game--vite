@@ -5,13 +5,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
 export const RulesDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">Szabályok</Button>
+        <span className="cursor-pointer hover:opacity-50">Szabályok</span>
       </DialogTrigger>
 
       <DialogContent>
