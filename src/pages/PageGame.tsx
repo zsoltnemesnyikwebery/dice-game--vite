@@ -18,38 +18,40 @@ export default function PageGame() {
 
     return (
         <section className="flex flex-col gap-6 items-center">
-            <h1 className="text-2xl font-bold">🎲 Dice Game</h1>
+            <div className={`flex flex-col items-center gap-6 transition-opacity ${game.status === GAME_STATUS.STARTED
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none"
+                        }`}>
+                <h1 className="text-2xl font-bold">🎲 Dice Game</h1>
 
-            {/* Total Score */}
-            <p>
-                {game.players[0].score.total} :{" "}
-                {game.players[1].score.total}
-            </p>
+                {/* Total Score */}
+                <p>
+                    {game.players[0].score.total} :{" "}
+                    {game.players[1].score.total}
+                </p>
 
-            {/* Player Cards */}
-            <div
-                className={`grid grid-cols-[1fr_3fr_1fr] gap-5 transition-all ${game.status === GAME_STATUS.STARTED
-                    ? "opacity-100"
-                    : "opacity-0 pointer-events-none"
-                }`}
-            >
-                {game.players.map((player) => (
-                    <PlayerCard key={player.id} {...player} />
-                ))}
+                {/* Player Cards */}
+                <div
+                    className={`grid grid-cols-[1fr_3fr_1fr] gap-5 transition-all`}
+                >
+                    {game.players.map((player) => (
+                        <PlayerCard key={player.id} {...player} />
+                    ))}
 
-                <div className="flex flex-col items-center gap-5 col-start-2 row-span-full">
-                    <Dice />
+                    <div className="flex flex-col items-center gap-5 col-start-2 row-span-full">
+                        <Dice />
 
-                    <Button onClick={roll}>Roll</Button>
+                        <Button onClick={roll}>Roll</Button>
 
-                    {game.players.find((p) => p.isActive)?.rolls && (
-                        <Button 
-                            variant="outline"
-                            onClick={skip}
-                        >
-                            Skip
-                        </Button>
-                    )}
+                        {game.players.find((p) => p.isActive)?.rolls && (
+                            <Button
+                                variant="outline"
+                                onClick={skip}
+                            >
+                                Skip
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </div>
 

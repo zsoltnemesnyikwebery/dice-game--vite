@@ -10,15 +10,31 @@ type Props = {
 
 const Popup = ({ game, handleStart }: Props) => {
   const isVisible = game.status !== GAME_STATUS.STARTED;
+  const isFinished = game.status === GAME_STATUS.ENDED;
 
   if (!isVisible) return null;
 
   return (
     <div className="fixed inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-black/50">
+      {isFinished && (
+        <p className="text-center text-5xl font-light">
+          Congratulations{" "}
+          <span className="text-pink-700 font-extrabold">
+            {game.winner?.name}
+          </span>
+          ! <br /> You won!
+        </p>
+      )}
 
       <Button onClick={handleStart}>
         Start the Game
       </Button>
+
+      {isFinished && (
+        <Button variant="destructive">
+          Reset game
+        </Button>
+      )}
     </div>
   );
 };
