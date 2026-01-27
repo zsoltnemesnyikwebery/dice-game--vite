@@ -64,3 +64,32 @@ export const updateAfterRoll = (game: Game): Game => {
     players,
   };
 };
+
+/** END THE TURN */
+export const endTurn = (game: Game): Game => {
+  const activeIndex = game.players.findIndex(p => p.isActive);
+
+  const players = game.players.map((player, i) => {
+    if (i === activeIndex) {
+      return {
+        ...player,
+        isActive: false,
+        rolls: undefined,
+        score: {
+          current: DEFAULT_SCORE,
+          total: player.score.total + player.score.current,
+        },
+      };
+    }
+
+    return {
+      ...player,
+      isActive: true,
+    };
+  });
+
+  return {
+    ...game,
+    players,
+  };
+};

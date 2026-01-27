@@ -11,6 +11,7 @@ export default function PageGame() {
         game,
         start,
         roll,
+        skip,
     } = useGame(["Player 1", "Player 2"]);
 
     console.log("Game State:", game);
@@ -42,7 +43,10 @@ export default function PageGame() {
                     <Button onClick={roll}>Roll</Button>
 
                     {game.players.find((p) => p.isActive)?.rolls && (
-                        <Button variant="outline">
+                        <Button 
+                            variant="outline"
+                            onClick={skip}
+                        >
                             Skip
                         </Button>
                     )}

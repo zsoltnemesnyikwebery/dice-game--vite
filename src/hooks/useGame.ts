@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { GAME_STATUS } from "@/lib/constants";
 import type { Game } from "@/models/interfaces";
-import { 
-  createNewGame, 
-  startGame, 
-  updateAfterRoll 
+import {
+  createNewGame,
+  endTurn,
+  startGame,
+  updateAfterRoll
 } from "@/lib/gameUtils";
 
 export const useGame = (playerNames: [string, string]) => {
@@ -20,9 +21,16 @@ export const useGame = (playerNames: [string, string]) => {
       return updateAfterRoll(prev);
     });
 
+  const skip = () =>
+    setGame(prev => {
+      if (prev.status !== GAME_STATUS.STARTED) return prev;
+      return endTurn(prev);
+    });
+
   return {
     game,
     start,
     roll,
+    skip,
   };
 };
