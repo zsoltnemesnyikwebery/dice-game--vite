@@ -2,8 +2,9 @@ import type { Game } from "@/models/interfaces";
 import { v4 as uuidv4 } from "uuid";
 import {
     DEFAULT_SCORE,
+    DEFAULT_MAX_SCORE,
 } from "@/lib/constants";
-import type { DiceRoll } from "@/models/types";
+import type { DiceRoll, Player } from "@/models/types";
 
 /** INIT NEW GAME */
 export const createNewGame = (playerNames: [string, string]): Game => ({
@@ -92,4 +93,9 @@ export const endTurn = (game: Game): Game => {
     ...game,
     players,
   };
+};
+
+/** CHECK FOR WINNER */
+export const checkWinner = (game: Game): Player | null => {
+    return game.players.find((p) => p.score.current >= DEFAULT_MAX_SCORE) || null;
 };
