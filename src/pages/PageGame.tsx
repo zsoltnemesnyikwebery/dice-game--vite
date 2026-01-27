@@ -10,6 +10,7 @@ export default function PageGame() {
     const {
         game,
         start,
+        roll,
     } = useGame(["Player 1", "Player 2"]);
 
     console.log("Game State:", game);
@@ -38,7 +39,7 @@ export default function PageGame() {
                 <div className="flex flex-col items-center gap-5 col-start-2 row-span-full">
                     <Dice />
 
-                    <Button>Roll</Button>
+                    <Button onClick={roll}>Roll</Button>
 
                     {game.players.find((p) => p.isActive)?.rolls && (
                         <Button variant="outline">

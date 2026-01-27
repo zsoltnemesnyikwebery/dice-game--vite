@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
     DEFAULT_SCORE,
 } from "@/lib/constants";
+import type { DiceRoll } from "@/models/types";
 
 /** INIT NEW GAME */
 export const createNewGame = (playerNames: [string, string]): Game => ({
@@ -32,3 +33,34 @@ export const startGame = (game: Game): Game => ({
     })),
     status: "in_progress",
 });
+
+/** ROLL THE DICE */
+export const rollDice = (): DiceRoll => [
+    Math.floor(Math.random() * 6) + 1,
+    Math.floor(Math.random() * 6) + 1,
+];
+
+export const updateAfterRoll = (game: Game): Game => {
+  const rollResult = rollDice();
+  const rollScore = rollResult[0] + rollResult[1];
+
+  const activeIndex = game.players.findIndex(p => p.isActive);
+
+  const players = game.players.map((player, i) =>
+    i === activeIndex
+      ? {
+          ...player,
+          rolls: rollResult,
+          score: {
+            ...player.score,
+            current: player.score.current + rollScore,
+          },
+        }
+      : player
+  );
+
+  return {
+    ...game,
+    players,
+  };
+};
