@@ -43,11 +43,15 @@ export const useGame = (playerNames: [string, string]) => {
   const newRound = () =>
     setGame(prev => startNewRound(prev));
 
+  const reset = () =>
+    setGame(createNewGame(playerNames));
+
   return {
     game,
     start,
     roll,
     skip,
     newRound,
+    reset,
   };
 };

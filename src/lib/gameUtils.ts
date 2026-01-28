@@ -127,3 +127,6 @@ export const startNewRound = (game: Game): Game => {
         status: GAME_STATUS.STARTED,
     };
 };
+
+export const resetGame = (playerNames: [string, string]): Game =>
+  createNewGame(playerNames);

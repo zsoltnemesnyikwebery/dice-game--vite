@@ -13,6 +13,7 @@ export default function PageGame() {
         roll,
         skip,
         newRound,
+        reset
     } = useGame(["Player 1", "Player 2"]);
 
     console.log("Game State:", game);
@@ -60,6 +61,7 @@ export default function PageGame() {
                 game={game}
                 handleStart={start}
                 handleNewRound={newRound}
+                handleReset={reset}
             />
         </section>
     );

@@ -7,16 +7,19 @@ type Props = {
   game: Game;
   handleStart: () => void;
   handleNewRound: () => void;
+  handleReset: () => void;
 };
 
-const Popup = ({ game, handleStart, handleNewRound }: Props) => {
+const Popup = ({ game, handleStart, handleNewRound, handleReset }: Props) => {
   const isVisible = game.status !== GAME_STATUS.STARTED;
   const isFinished = game.status === GAME_STATUS.ENDED;
 
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-black/50">
+    <div 
+      className="fixed inset-0 z-10 flex flex-col items-center justify-center gap-6 bg-black/50"
+    >
       {isFinished && (
         <p className="text-center text-5xl font-light">
           Congratulations{" "}
@@ -27,12 +30,20 @@ const Popup = ({ game, handleStart, handleNewRound }: Props) => {
         </p>
       )}
 
-      <Button onClick={isFinished ? handleNewRound : handleStart}>
+      <Button
+        onClick={
+          isFinished ?
+            handleNewRound : handleStart
+        }
+      >
         {isFinished ? "Play again" : "Start game"}
       </Button>
 
       {isFinished && (
-        <Button variant="destructive">
+        <Button
+          variant="destructive"
+          onClick={handleReset}
+        >
           Reset game
         </Button>
       )}
