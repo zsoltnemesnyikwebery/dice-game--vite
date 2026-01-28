@@ -6,7 +6,8 @@ import {
   createNewGame,
   endTurn,
   startGame,
-  updateAfterRoll
+  updateAfterRoll,
+  startNewRound,
 } from "@/lib/gameUtils";
 
 export const useGame = (playerNames: [string, string]) => {
@@ -39,10 +40,14 @@ export const useGame = (playerNames: [string, string]) => {
       return endTurn(prev);
     });
 
+  const newRound = () =>
+    setGame(prev => startNewRound(prev));
+
   return {
     game,
     start,
     roll,
     skip,
+    newRound,
   };
 };

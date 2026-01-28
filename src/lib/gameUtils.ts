@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
     DEFAULT_SCORE,
     DEFAULT_MAX_SCORE,
+    GAME_STATUS,
 } from "@/lib/constants";
 import type { DiceRoll, Player } from "@/models/types";
 
@@ -42,60 +43,87 @@ export const rollDice = (): DiceRoll => [
 ];
 
 export const updateAfterRoll = (game: Game): Game => {
-  const rollResult = rollDice();
-  const rollScore = rollResult[0] + rollResult[1];
+    const rollResult = rollDice();
+    const rollScore = rollResult[0] + rollResult[1];
 
-  const activeIndex = game.players.findIndex(p => p.isActive);
+    const activeIndex = game.players.findIndex(p => p.isActive);
 
-  const players = game.players.map((player, i) =>
-    i === activeIndex
-      ? {
-          ...player,
-          rolls: rollResult,
-          score: {
-            ...player.score,
-            current: player.score.current + rollScore,
-          },
-        }
-      : player
-  );
+    const players = game.players.map((player, i) =>
+        i === activeIndex
+            ? {
+                ...player,
+                rolls: rollResult,
+                score: {
+                    ...player.score,
+                    current: player.score.current + rollScore,
+                },
+            }
+            : player
+    );
 
-  return {
-    ...game,
-    players,
-  };
+    return {
+        ...game,
+        players,
+    };
 };
 
 /** END THE TURN */
 export const endTurn = (game: Game): Game => {
-  const activeIndex = game.players.findIndex(p => p.isActive);
+    const activeIndex = game.players.findIndex(p => p.isActive);
 
-  const players = game.players.map((player, i) => {
-    if (i === activeIndex) {
-      return {
-        ...player,
-        isActive: false,
-        rolls: undefined,
-        score: {
-          current: DEFAULT_SCORE,
-          total: player.score.total + player.score.current,
-        },
-      };
-    }
+    const players = game.players.map((player, i) => {
+        if (i === activeIndex) {
+            return {
+                ...player,
+                isActive: false,
+                rolls: undefined,
+                score: {
+                    ...player.score,
+                    total: player.score.total,
+                },
+            };
+        }
+
+        return {
+            ...player,
+            isActive: true,
+        };
+    });
 
     return {
-      ...player,
-      isActive: true,
+        ...game,
+        players,
     };
-  });
-
-  return {
-    ...game,
-    players,
-  };
 };
 
 /** CHECK FOR WINNER */
 export const checkWinner = (game: Game): Player | null => {
     return game.players.find((p) => p.score.current >= DEFAULT_MAX_SCORE) || null;
+};
+
+export const startNewRound = (game: Game): Game => {
+    if (!game.winner) return game;
+
+    const players = game.players.map(player => ({
+        ...player,
+        isActive: false,
+        rolls: undefined,
+        score: {
+            current: DEFAULT_SCORE,
+            total:
+                player.id === game.winner?.id
+                    ? player.score.total + 1
+                    : player.score.total,
+        },
+    }));
+
+    // első játékos kezd
+    players[0].isActive = true;
+
+    return {
+        ...game,
+        players,
+        winner: null,
+        status: GAME_STATUS.STARTED,
+    };
 };

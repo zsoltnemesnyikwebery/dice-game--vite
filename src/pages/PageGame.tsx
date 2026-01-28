@@ -12,6 +12,7 @@ export default function PageGame() {
         start,
         roll,
         skip,
+        newRound,
     } = useGame(["Player 1", "Player 2"]);
 
     console.log("Game State:", game);
@@ -58,6 +59,7 @@ export default function PageGame() {
             <Popup
                 game={game}
                 handleStart={start}
+                handleNewRound={newRound}
             />
         </section>
     );

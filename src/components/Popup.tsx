@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 type Props = {
   game: Game;
   handleStart: () => void;
+  handleNewRound: () => void;
 };
 
-const Popup = ({ game, handleStart }: Props) => {
+const Popup = ({ game, handleStart, handleNewRound }: Props) => {
   const isVisible = game.status !== GAME_STATUS.STARTED;
   const isFinished = game.status === GAME_STATUS.ENDED;
 
@@ -26,8 +27,8 @@ const Popup = ({ game, handleStart }: Props) => {
         </p>
       )}
 
-      <Button onClick={handleStart}>
-        Start the Game
+      <Button onClick={isFinished ? handleNewRound : handleStart}>
+        {isFinished ? "Play again" : "Start game"}
       </Button>
 
       {isFinished && (
