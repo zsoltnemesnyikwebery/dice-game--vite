@@ -20,7 +20,7 @@ export default function PageGame() {
         <section className="flex flex-col gap-6 items-center">
             <div className={`flex flex-col items-center gap-6 transition-opacity ${game.status === GAME_STATUS.STARTED
                         ? "opacity-100"
-                        : "opacity-0 pointer-events-none"
+                        : "opacity-20 pointer-events-none"
                         }`}>
                 <h1 className="text-2xl font-bold">🎲 Dice Game</h1>
 

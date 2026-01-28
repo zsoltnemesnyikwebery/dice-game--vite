@@ -17,20 +17,19 @@ export const useGame = (playerNames: [string, string]) => {
   const start = () => setGame(startGame);
 
   const roll = () => {
-    // TODO: check if there is a winner
-    const winner = checkWinner(game);
-    if (winner) {
-      setGame(prev => ({
-        ...prev,
-        status: GAME_STATUS.ENDED,
-        winner,
-      }));
-      return;
-    }
-
     setGame(prev => {
       if (prev.status !== GAME_STATUS.STARTED) return prev;
-      return updateAfterRoll(prev);
+
+      const updatedGame = updateAfterRoll(prev);
+      const isWinner = checkWinner(updatedGame);
+
+      if (!isWinner) return updatedGame;
+      
+      return {
+        ...updatedGame,
+        status: GAME_STATUS.ENDED,
+        winner: isWinner,
+      }
     });
   };
 
