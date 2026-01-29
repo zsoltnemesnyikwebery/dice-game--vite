@@ -1,4 +1,4 @@
-import type { GAME_STATUS } from "@/lib/constants";
+import type { DICE_COUNT, GAME_STATUS } from "@/lib/constants";
 
 export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;
 export type DiceRoll = [DiceValue, DiceValue];

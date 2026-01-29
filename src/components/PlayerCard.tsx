@@ -10,7 +10,7 @@ export default function PlayerCard({
     return (
         <div
             className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl relative transition-all text-center ${
-                isActive ? "before:bg-red-500 before:size-5 before:absolute before:rounded-full before:-top-5 before:left-1/2 before:-translate-1/2 before:content-['']" : "opacity-30"
+                isActive ? "before:bg-red-500 before:size-5 before:absolute before:rounded-full before:-left-10 sm:before:-top-5 sm:before:left-1/2 sm:before:-translate-1/2 before:content-['']" : "opacity-15"
             }`}
             style={{ backgroundColor: color }}
         >

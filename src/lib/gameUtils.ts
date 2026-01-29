@@ -4,6 +4,7 @@ import {
     DEFAULT_SCORE,
     DEFAULT_MAX_SCORE,
     GAME_STATUS,
+    DICE_COUNT,
 } from "@/lib/constants";
 import type { DiceRoll, DiceValue, Player } from "@/models/types";
 
@@ -40,10 +41,7 @@ export const startGame = (game: Game): Game => ({
 export const rollDice = (): DiceRoll => {
     const rollSingleDice = (): DiceValue => (Math.floor(Math.random() * 6) + 1) as DiceValue;
 
-    return [
-        rollSingleDice(),
-        rollSingleDice(),
-    ]
+    return Array.from({ length: DICE_COUNT }, rollSingleDice) as DiceRoll;
 };
 
 export const updateAfterRoll = (game: Game): Game => {

@@ -32,13 +32,13 @@ export default function PageGame() {
 
                 {/* Player Cards */}
                 <div
-                    className={`grid grid-cols-[1fr_3fr_1fr] gap-5 transition-all`}
+                    className={`grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr] gap-5 transition-all`}
                 >
                     {game.players.map((player) => (
                         <PlayerCard key={player.id} {...player} />
                     ))}
 
-                    <div className="flex flex-col items-center gap-5 col-start-2 row-span-full">
+                    <div className="flex flex-col items-center gap-5 max-sm:self-center  col-start-2 row-span-full">
                         <Dices rollValues={game.players.find((p) => p.isActive)?.rolls} />
 
                         <Button onClick={roll}>Roll</Button>

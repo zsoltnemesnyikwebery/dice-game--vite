@@ -5,3 +5,4 @@ export const GAME_STATUS = {
     STARTED: "in_progress",
     ENDED: "ended",
 } as const;
+export const DICE_COUNT = 2;
