@@ -46,7 +46,7 @@ export const rollDice = (): DiceRoll => {
 
 export const updateAfterRoll = (game: Game): Game => {
     const rollResult = rollDice();
-    const rollScore = rollResult[0] + rollResult[1];
+    const rollScore = rollResult.reduce((a, b) => a + b, 0);
 
     const activeIndex = game.players.findIndex(p => p.isActive);
 
