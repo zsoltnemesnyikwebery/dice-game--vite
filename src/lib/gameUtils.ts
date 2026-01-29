@@ -22,8 +22,8 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
             total: DEFAULT_SCORE,
         },
     })),
-    status: "not_started",
-    winner: null,
+    status: GAME_STATUS.NOT_STARTED,
+    winner: undefined,
 });
 
 /** START THE GAME */
@@ -34,7 +34,7 @@ export const startGame = (game: Game): Game => ({
         id: uuidv4(),
         avatar: `https://picsum.photos/300?random=${i}`,
     })),
-    status: "in_progress",
+    status: GAME_STATUS.STARTED,
 });
 
 /** ROLL THE DICE */
@@ -49,7 +49,6 @@ export const updateAfterRoll = (game: Game): Game => {
     const rollScore = rollResult.reduce((a, b) => a + b, 0);
 
     const activeIndex = game.players.findIndex(p => p.isActive);
-
     const players = game.players.map((player, i) =>
         i === activeIndex
             ? {
@@ -106,9 +105,9 @@ export const checkWinner = (game: Game): Player | null => {
 export const startNewRound = (game: Game): Game => {
     if (!game.winner) return game;
 
-    const players = game.players.map(player => ({
+    const players = game.players.map((player) => ({
         ...player,
-        isActive: false,
+        isActive: player.isActive ? false : true,
         rolls: undefined,
         score: {
             current: DEFAULT_SCORE,
@@ -119,13 +118,10 @@ export const startNewRound = (game: Game): Game => {
         },
     }));
 
-    // első játékos kezd
-    players[0].isActive = true;
-
     return {
         ...game,
         players,
-        winner: null,
+        winner: undefined,
         status: GAME_STATUS.STARTED,
     };
 };
