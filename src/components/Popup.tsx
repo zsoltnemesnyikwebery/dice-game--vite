@@ -3,7 +3,7 @@ import { GAME_STATUS } from "@/lib/constants";
 
 import { Button } from "@/components/ui/button";
 
-type Props = {
+interface Props {
   game: Game;
   handleStart: () => void;
   handleNewRound: () => void;

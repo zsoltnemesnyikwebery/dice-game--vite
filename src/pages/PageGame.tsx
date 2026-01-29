@@ -2,7 +2,7 @@ import { useGame } from "@/hooks/useGame";
 import { GAME_STATUS } from "@/lib/constants";
 
 import { Button } from "@/components/ui/button";
-import Dice from "@/components/Dice";
+import Dices from "@/components/Dices";
 import PlayerCard from "@/components/PlayerCard";
 import Popup from "@/components/Popup";
 
@@ -16,15 +16,13 @@ export default function PageGame() {
         reset
     } = useGame(["Player 1", "Player 2"]);
 
-    console.log("Game State:", game);
-
     return (
         <section className="flex flex-col gap-6 items-center">
             <div className={`flex flex-col items-center gap-6 transition-opacity ${game.status === GAME_STATUS.STARTED
                         ? "opacity-100"
                         : "opacity-20 pointer-events-none"
                         }`}>
-                <h1 className="text-2xl font-bold">🎲 Dice Game</h1>
+                <h1 className="text-2xl font-bold">Dice Game</h1>
 
                 {/* Total Score */}
                 <p>
@@ -41,7 +39,7 @@ export default function PageGame() {
                     ))}
 
                     <div className="flex flex-col items-center gap-5 col-start-2 row-span-full">
-                        <Dice />
+                        <Dices rollValues={game.players.find((p) => p.isActive)?.rolls} />
 
                         <Button onClick={roll}>Roll</Button>
 
