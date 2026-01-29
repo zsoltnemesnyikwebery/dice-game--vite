@@ -5,7 +5,7 @@ import {
     DEFAULT_MAX_SCORE,
     GAME_STATUS,
 } from "@/lib/constants";
-import type { DiceRoll, Player } from "@/models/types";
+import type { DiceRoll, DiceValue, Player } from "@/models/types";
 
 /** INIT NEW GAME */
 export const createNewGame = (playerNames: [string, string]): Game => ({
@@ -37,10 +37,14 @@ export const startGame = (game: Game): Game => ({
 });
 
 /** ROLL THE DICE */
-export const rollDice = (): DiceRoll => [
-    Math.floor(Math.random() * 6) + 1,
-    Math.floor(Math.random() * 6) + 1,
-];
+export const rollDice = (): DiceRoll => {
+    const rollSingleDice = (): DiceValue => (Math.floor(Math.random() * 6) + 1) as DiceValue;
+
+    return [
+        rollSingleDice(),
+        rollSingleDice(),
+    ]
+};
 
 export const updateAfterRoll = (game: Game): Game => {
     const rollResult = rollDice();
@@ -129,4 +133,4 @@ export const startNewRound = (game: Game): Game => {
 };
 
 export const resetGame = (playerNames: [string, string]): Game =>
-  createNewGame(playerNames);
+    createNewGame(playerNames);
