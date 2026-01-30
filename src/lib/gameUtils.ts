@@ -46,7 +46,37 @@ export const rollDice = (): DiceRoll => {
 
 export const updateAfterRoll = (game: Game): Game => {
     const rollResult = rollDice();
-    const rollScore = rollResult.reduce((a, b) => a + b, 0);
+
+    /* SPECIAL ROLLS  */
+    const allSixes = rollResult.every((value) => value === 6);
+
+    // If all ones, reset current score to 0
+    if (rollResult.every((value) => value === 1)) {
+        const activeIndex = game.players.findIndex(p => p.isActive);
+        const players = game.players.map((player, i) =>
+            i === activeIndex
+                ? {
+                    ...player,
+                    rolls: rollResult,
+                    score: {
+                        ...player.score,
+                        current: 0,
+                    },
+                    isActive: false,
+                }
+                : {
+                    ...player,
+                    isActive: true
+                }
+        );
+
+        return {
+            ...game,
+            players,
+        };
+    }
+
+    const rollScore = rollResult.reduce((a, b) => a + b, 0) * (allSixes ? 2 : 1);
 
     const activeIndex = game.players.findIndex(p => p.isActive);
     const players = game.players.map((player, i) =>
@@ -58,6 +88,7 @@ export const updateAfterRoll = (game: Game): Game => {
                     ...player.score,
                     current: player.score.current + rollScore,
                 },
+                celebration: allSixes,
             }
             : player
     );
