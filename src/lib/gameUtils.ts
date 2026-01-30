@@ -21,6 +21,7 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
             current: DEFAULT_SCORE,
             total: DEFAULT_SCORE,
         },
+        actions: {},
     })),
     status: GAME_STATUS.NOT_STARTED,
     winner: undefined,
@@ -88,7 +89,10 @@ export const updateAfterRoll = (game: Game): Game => {
                     ...player.score,
                     current: player.score.current + rollScore,
                 },
-                celebration: allSixes,
+                actions: {
+                    ...player.actions,
+                    celebration: allSixes,
+                },
             }
             : player
     );
