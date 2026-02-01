@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Dices from "@/components/Dices";
 import PlayerCard from "@/components/PlayerCard";
 import Popup from "@/components/Popup";
+import TotalScore from "@/components/TotalScore";
 
 export default function PageGame() {
     const {
@@ -25,10 +26,10 @@ export default function PageGame() {
                 <h1 className="text-2xl font-bold">Dice Game</h1>
 
                 {/* Total Score */}
-                <p>
-                    {game.players[0].score.total} :{" "}
-                    {game.players[1].score.total}
-                </p>
+                <TotalScore scores={{
+                    player1: game.players[0].score.total,
+                    player2: game.players[1].score.total,
+                }} />
 
                 {/* Player Cards */}
                 <div
