@@ -1,11 +1,8 @@
 import { useGame } from "@/hooks/useGame";
 import { GAME_STATUS } from "@/lib/constants";
 
-import { Button } from "@/components/ui/button";
-import Dices from "@/components/Dices";
-import PlayerCard from "@/components/PlayerCard";
+import GameBoard from "@/components/GameBoard";
 import Popup from "@/components/Popup";
-import TotalScore from "@/components/TotalScore";
 
 export default function PageGame() {
     const {
@@ -20,40 +17,13 @@ export default function PageGame() {
     return (
         <section className="flex flex-col gap-6 items-center">
             <div className={`flex flex-col items-center gap-6 transition-opacity ${game.status === GAME_STATUS.STARTED
-                        ? "opacity-100"
-                        : "opacity-20 pointer-events-none"
-                        }`}>
+                ? "opacity-100"
+                : "opacity-20 pointer-events-none"
+                }`}>
                 <h1 className="text-2xl font-bold">Dice Game</h1>
 
-                {/* Total Score */}
-                <TotalScore scores={{
-                    player1: game.players[0].score.total,
-                    player2: game.players[1].score.total,
-                }} />
-
-                {/* Player Cards */}
-                <div
-                    className={`grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr] gap-5 transition-all`}
-                >
-                    {game.players.map((player) => (
-                        <PlayerCard key={player.id} {...player} />
-                    ))}
-
-                    <div className="flex flex-col items-center gap-5 max-sm:self-center  col-start-2 row-span-full">
-                        <Dices rollValues={game.players.find((p) => p.isActive)?.rolls} />
-
-                        <Button onClick={roll}>Roll</Button>
-
-                        {game.players.find((p) => p.isActive)?.rolls && (
-                            <Button
-                                variant="outline"
-                                onClick={skip}
-                            >
-                                Skip
-                            </Button>
-                        )}
-                    </div>
-                </div>
+                {/* Game Board */}
+                <GameBoard game={game} handleRoll={roll} handleSkip={skip} />
             </div>
 
             <Popup
