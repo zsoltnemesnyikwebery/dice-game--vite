@@ -5,6 +5,7 @@ import {
     DEFAULT_MAX_SCORE,
     GAME_STATUS,
     DICE_COUNT,
+    DICE_SIDES,
 } from "@/lib/constants";
 import type { DiceRoll, DiceValue, Player } from "@/models/types";
 
@@ -42,13 +43,15 @@ export const rollDice = (): DiceRoll => {
 
 export const updateAfterRoll = (game: Game): Game => {
     const rollResult = rollDice();
+    const activeIndex = game.players.findIndex(p => p.isActive);
+
+    const isAll = (rolls: DiceRoll, value: DiceValue) => rolls.every((v) => v === value);
 
     /* SPECIAL ROLLS  */
-    const allSixes = rollResult.every((value) => value === 6);
+    // 1.) if all ones, reset current score to 0
+    const allOnes = isAll(rollResult, 1);
 
-    // If all ones, reset current score to 0
-    if (rollResult.every((value) => value === 1)) {
-        const activeIndex = game.players.findIndex(p => p.isActive);
+    if (allOnes) {
         const players = game.players.map((player, i) =>
             i === activeIndex
                 ? {
@@ -59,6 +62,9 @@ export const updateAfterRoll = (game: Game): Game => {
                         current: 0,
                     },
                     isActive: false,
+                    actions: {
+                        destroy: true,
+                    }
                 }
                 : {
                     ...player,
@@ -72,9 +78,10 @@ export const updateAfterRoll = (game: Game): Game => {
         };
     }
 
-    const rollScore = rollResult.reduce((a, b) => a + b, 0) * (allSixes ? 2 : 1);
+    // 2.) if all 6s, double the score, otherwise normal score
+    const allSixes = isAll(rollResult, 6);
+    const rollScore = rollResult.reduce((a, b) => a + b, 0) * (isAll(rollResult, DICE_SIDES) ? 2 : 1);
 
-    const activeIndex = game.players.findIndex(p => p.isActive);
     const players = game.players.map((player, i) =>
         i === activeIndex
             ? {
@@ -85,8 +92,7 @@ export const updateAfterRoll = (game: Game): Game => {
                     current: player.score.current + rollScore,
                 },
                 actions: {
-                    ...player.actions,
-                    celebration: allSixes,
+                    celebration: allSixes
                 },
             }
             : player
@@ -100,10 +106,8 @@ export const updateAfterRoll = (game: Game): Game => {
 
 /** END THE TURN */
 export const endTurn = (game: Game): Game => {
-    const activeIndex = game.players.findIndex(p => p.isActive);
-
     const players = game.players.map((player, i) => {
-        if (i === activeIndex) {
+        if (i === game.players.findIndex(p => p.isActive)) {
             return {
                 ...player,
                 isActive: false,

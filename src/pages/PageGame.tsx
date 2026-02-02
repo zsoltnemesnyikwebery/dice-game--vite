@@ -1,5 +1,5 @@
+import { useEffect } from "react";
 import { useGame } from "@/hooks/useGame";
-import { GAME_STATUS } from "@/lib/constants";
 
 import GameBoard from "@/components/GameBoard";
 import Popup from "@/components/Popup";
@@ -14,17 +14,24 @@ export default function PageGame() {
         reset
     } = useGame(["Player 1", "Player 2"]);
 
+    useEffect(() => {
+        game.players.forEach(player => {
+            if (player.actions.celebration) {
+                console.log("🎉 CELEBRATION:", player.name);
+            }
+
+            if (player.actions.destroy) {
+                console.log("💀 DESTROY:", player.name);
+            }
+        });
+    }, [game]);
+
     return (
-        <section className="flex flex-col gap-6 items-center">
-            <div className={`flex flex-col items-center gap-6 transition-opacity ${game.status === GAME_STATUS.STARTED
-                ? "opacity-100"
-                : "opacity-20 pointer-events-none"
-                }`}>
+        <section className="size-full">
+            {/* Game Board */}
+            <GameBoard game={game} handleRoll={roll} handleSkip={skip} />
 
-                {/* Game Board */}
-                <GameBoard game={game} handleRoll={roll} handleSkip={skip} />
-            </div>
-
+            {/* Popup */}
             <Popup
                 game={game}
                 handleStart={start}

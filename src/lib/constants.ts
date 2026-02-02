@@ -6,3 +6,4 @@ export const GAME_STATUS = {
     ENDED: "ended",
 } as const;
 export const DICE_COUNT = 2 as const;
+export const DICE_SIDES = 6 as const;

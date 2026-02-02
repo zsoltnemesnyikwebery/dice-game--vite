@@ -60,11 +60,9 @@ const GameBoard = ({ game, handleRoll, handleSkip }: Props) => {
                 <div className="flex flex-col items-center gap-5 max-sm:self-center  col-start-2 row-span-full">
                     <Dices
                         rollValues={game.players.find((p) => p.isActive)?.rolls}
-                        celebration={game.players.find((p) => p.isActive)?.actions.celebration}
+                        actions={game.players.find((p) => p.isActive)?.actions || {}}
                     />
-                    <div
-                        className={`flex flex-col gap-4`}
-                    >
+                    <div className="flex flex-col gap-4">
                         <Button
                             onClick={handleRoll}
                         >
