@@ -4,7 +4,7 @@ export type DiceValue = 1 | 2 | 3 | 4 | 5 | 6;
 export type DiceRoll = DiceValue[];
 export type GameStatus = typeof GAME_STATUS[keyof typeof GAME_STATUS];
 export type Player = {
-  id: string | undefined;
+  id: string;
   name: string;
   avatar: string;
   color: string;

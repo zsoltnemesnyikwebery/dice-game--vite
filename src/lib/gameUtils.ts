@@ -11,7 +11,7 @@ import type { DiceRoll, DiceValue, Player } from "@/models/types";
 /** INIT NEW GAME */
 export const createNewGame = (playerNames: [string, string]): Game => ({
     players: playerNames.map((name, i) => ({
-        id: undefined,
+        id: uuidv4(),
         name,
         avatar: `https://picsum.photos/300?random=${i}`,
         color: i === 0 ? "blue" : "red",
@@ -30,10 +30,6 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
 /** START THE GAME */
 export const startGame = (game: Game): Game => ({
     ...game,
-    players: game.players.map((player) => ({
-        ...player,
-        id: uuidv4(),
-    })),
     status: GAME_STATUS.STARTED,
 });
 
