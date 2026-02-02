@@ -104,6 +104,14 @@ export const updateAfterRoll = (game: Game): Game => {
     };
 };
 
+export const clearPlayerActions = (game: Game): Game => ({
+    ...game,
+    players: game.players.map(player => ({
+        ...player,
+        actions: {},
+    })),
+});
+
 /** END THE TURN */
 export const endTurn = (game: Game): Game => {
     const players = game.players.map((player, i) => {

@@ -8,6 +8,7 @@ import {
   startGame,
   updateAfterRoll,
   startNewRound,
+  clearPlayerActions,
 } from "@/lib/gameUtils";
 
 export const useGame = (playerNames: [string, string]) => {
@@ -34,6 +35,9 @@ export const useGame = (playerNames: [string, string]) => {
     });
   };
 
+  const clearActions = () =>
+    setGame(prev => clearPlayerActions(prev));
+
   const skip = () =>
     setGame(prev => {
       if (prev.status !== GAME_STATUS.STARTED) return prev;
@@ -53,5 +57,6 @@ export const useGame = (playerNames: [string, string]) => {
     skip,
     newRound,
     reset,
+    clearActions,
   };
 };

@@ -11,20 +11,30 @@ export default function PageGame() {
         roll,
         skip,
         newRound,
-        reset
+        reset,
+        clearActions,
     } = useGame(["Player 1", "Player 2"]);
 
     useEffect(() => {
+        let hasAction = false;
+
         game.players.forEach(player => {
-            if (player.actions.celebration) {
+            if (player.actions?.celebration) {
                 console.log("🎉 CELEBRATION:", player.name);
+                hasAction = true;
             }
 
-            if (player.actions.destroy) {
-                console.log("💀 DESTROY:", player.name);
+            if (player.actions?.destroy) {
+                console.log("💥 DESTROY:", player.name);
+                hasAction = true;
             }
         });
-    }, [game]);
+
+        if (hasAction) {
+            clearActions();
+        }
+    }, [game.players]);
+
 
     return (
         <section className="size-full">
