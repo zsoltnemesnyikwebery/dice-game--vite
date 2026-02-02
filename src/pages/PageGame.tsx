@@ -20,7 +20,6 @@ export default function PageGame() {
                 ? "opacity-100"
                 : "opacity-20 pointer-events-none"
                 }`}>
-                <h1 className="text-2xl font-bold">Dice Game</h1>
 
                 {/* Game Board */}
                 <GameBoard game={game} handleRoll={roll} handleSkip={skip} />

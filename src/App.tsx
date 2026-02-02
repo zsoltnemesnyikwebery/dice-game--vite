@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className="container mx-auto px-5 flex min-h-screen flex-col items-center justify-center">
+      <main className="container min-h-[calc(100vh-4.5rem)] mx-auto px-5 flex flex-col items-center justify-center">
         <BrowserRouter>
           <Routes>
               <Route path="/" element={<PageHome />} />

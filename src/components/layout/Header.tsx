@@ -11,7 +11,7 @@ export const Header = () => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: .5, ease: "easeOut" }}
-      className="fixed w-full left-1/2 -translate-x-1/2 px-6 py-4"
+      className="sticky top-0 w-full py-4"
     >
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}

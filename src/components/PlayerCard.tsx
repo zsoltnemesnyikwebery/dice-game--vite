@@ -19,7 +19,7 @@ export default function PlayerCard({
                 alt={name}
                 width={100}
                 height={100}
-                className="rounded-full"
+                className="rounded-full aspect-square w-auto max-h-[10vh] md:max-h-[20vh] min-h-12.5"
             />
             <h2 className="font-bold text-lg">{name}</h2>
             <p className="text-2xl font-mono">{score.current}</p>
