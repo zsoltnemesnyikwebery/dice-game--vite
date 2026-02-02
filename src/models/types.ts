@@ -6,7 +6,7 @@ export type GameStatus = typeof GAME_STATUS[keyof typeof GAME_STATUS];
 export type Player = {
   id: string | undefined;
   name: string;
-  avatar: string | undefined;
+  avatar: string;
   color: string;
   isActive: boolean;
   rolls: DiceRoll | undefined;

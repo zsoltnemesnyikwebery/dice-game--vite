@@ -13,7 +13,7 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
     players: playerNames.map((name, i) => ({
         id: undefined,
         name,
-        avatar: undefined,
+        avatar: `https://picsum.photos/300?random=${i}`,
         color: i === 0 ? "blue" : "red",
         isActive: i === 0,
         rolls: undefined,
@@ -30,10 +30,9 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
 /** START THE GAME */
 export const startGame = (game: Game): Game => ({
     ...game,
-    players: game.players.map((player, i) => ({
+    players: game.players.map((player) => ({
         ...player,
         id: uuidv4(),
-        avatar: `https://picsum.photos/300?random=${i}`,
     })),
     status: GAME_STATUS.STARTED,
 });
