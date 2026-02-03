@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 
 import GameBoard from "@/components/GameBoard";
@@ -15,31 +15,35 @@ export default function PageGame() {
         clearActions,
     } = useGame(["Player 1", "Player 2"]);
 
+    const activePlayer = game.players.find(p => p.isActive);
+    const celebration = activePlayer?.actions.celebration;
+
+    const [isLocked, setIsLocked] = useState<boolean | undefined>(false)
+
     useEffect(() => {
-        let hasAction = false;
 
-        game.players.forEach(player => {
-            if (player.actions?.celebration) {
-                console.log("🎉 CELEBRATION:", player.name);
-                hasAction = true;
-            }
+        if (!celebration) return;
 
-            if (player.actions?.destroy) {
-                console.log("💥 DESTROY:", player.name);
-                hasAction = true;
-            }
-        });
+        const lockTimer = setTimeout(() => {
+            setIsLocked(true);
+        }, 0);
 
-        if (hasAction) {
+        const unlockTimer = setTimeout(() => {
+            setIsLocked(false);
             clearActions();
-        }
-    }, [game.players]);
+        }, 2000);
+
+        return () => {
+            clearTimeout(lockTimer);
+            clearTimeout(unlockTimer);
+        };
+    }, [celebration, clearActions]);
 
 
     return (
         <section className="size-full">
             {/* Game Board */}
-            <GameBoard game={game} handleRoll={roll} handleSkip={skip} />
+            <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} />
 
             {/* Popup */}
             <Popup

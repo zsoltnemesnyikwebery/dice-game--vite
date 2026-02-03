@@ -22,7 +22,10 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
             current: DEFAULT_SCORE,
             total: DEFAULT_SCORE,
         },
-        actions: {},
+        actions: {
+            celebration: false,
+            destroy: false,
+        },
     })),
     status: GAME_STATUS.NOT_STARTED,
     winner: undefined,
@@ -63,6 +66,7 @@ export const updateAfterRoll = (game: Game): Game => {
                     },
                     isActive: false,
                     actions: {
+                        ...player.actions,
                         destroy: true,
                     }
                 }
@@ -92,6 +96,7 @@ export const updateAfterRoll = (game: Game): Game => {
                     current: player.score.current + rollScore,
                 },
                 actions: {
+                    ...player.actions,
                     celebration: allSixes
                 },
             }
@@ -108,7 +113,10 @@ export const clearPlayerActions = (game: Game): Game => ({
     ...game,
     players: game.players.map(player => ({
         ...player,
-        actions: {},
+        actions: {
+            celebration: false,
+            destroy: false,
+        },
     })),
 });
 

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+
 import type { Game } from "@/models/interfaces";
 
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,10 @@ interface Props {
     game: Game;
     handleRoll: () => void;
     handleSkip: () => void;
+    isLocked?: boolean;
 }
 
-const GameBoard = ({ game, handleRoll, handleSkip }: Props) => {
+const GameBoard = ({ game, handleRoll, handleSkip, isLocked }: Props) => {
     return (
         <div className="w-full p-12 md:p-24 border rounded-4xl flex flex-col gap-6 items-center">
             {/* Total Score */}
@@ -22,7 +24,9 @@ const GameBoard = ({ game, handleRoll, handleSkip }: Props) => {
             }} />
 
             <div
-                className={`grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr] gap-5 transition-all`}
+                className={`grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr] gap-5 transition-all
+                    ${isLocked ? "opacity-50 pointer-events-none" : "opacity-100 pointer-events-auto"}
+                `}
             >
                 {game.players.map((player) => (
                     <PlayerCard key={player.id} {...player} />
@@ -65,6 +69,7 @@ const GameBoard = ({ game, handleRoll, handleSkip }: Props) => {
                     <div className="flex flex-col gap-4">
                         <Button
                             onClick={handleRoll}
+                            disabled={isLocked}
                         >
                             Roll
                         </Button>
@@ -73,6 +78,7 @@ const GameBoard = ({ game, handleRoll, handleSkip }: Props) => {
                             <Button
                                 variant="outline"
                                 onClick={handleSkip}
+                                disabled={isLocked}
                             >
                                 Skip
                             </Button>

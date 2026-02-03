@@ -15,7 +15,7 @@ export type Player = {
     total: number;
   };
   actions: {
-    celebration?: boolean;
-    destroy?: boolean;
+    celebration: boolean;
+    destroy: boolean;
   };
 };
