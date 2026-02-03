@@ -6,15 +6,18 @@ import { Button } from "@/components/ui/button";
 import Dices from "@/components/Dices";
 import PlayerCard from "@/components/PlayerCard";
 import TotalScore from "@/components/TotalScore";
+import type { Player } from "@/models/types";
 
 interface Props {
     game: Game;
+    activePlayer?: Player | undefined;
     handleRoll: () => void;
     handleSkip: () => void;
     isLocked?: boolean;
 }
 
-const GameBoard = ({ game, handleRoll, handleSkip, isLocked }: Props) => {
+const GameBoard = ({ game, handleRoll, handleSkip, isLocked, activePlayer }: Props) => {
+
     return (
         <div className="w-full p-12 md:p-24 border rounded-4xl flex flex-col gap-6 items-center">
             {/* Total Score */}
@@ -62,10 +65,12 @@ const GameBoard = ({ game, handleRoll, handleSkip, isLocked }: Props) => {
                 )}
 
                 <div className="flex flex-col items-center gap-5 max-sm:self-center  col-start-2 row-span-full">
-                    <Dices
-                        rollValues={game.players.find((p) => p.isActive)?.rolls}
-                        actions={game.players.find((p) => p.isActive)?.actions || {}}
-                    />
+                    {activePlayer && (
+                        <Dices
+                            rollValues={activePlayer.rolls}
+                            actions={activePlayer.actions}
+                        />
+                    )}
                     <div className="flex flex-col gap-4">
                         <Button
                             onClick={handleRoll}

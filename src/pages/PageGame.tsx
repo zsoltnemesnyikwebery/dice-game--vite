@@ -43,7 +43,7 @@ export default function PageGame() {
     return (
         <section className="size-full">
             {/* Game Board */}
-            <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} />
+            <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} activePlayer={activePlayer} />
 
             {/* Popup */}
             <Popup

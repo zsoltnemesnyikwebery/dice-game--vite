@@ -2,7 +2,11 @@ import type { DiceValue } from "@/models/types"
 import Dice from "./Dice"
 
 interface Props {
-    rollValues: DiceValue[] | undefined
+    rollValues: DiceValue[] | undefined;
+    actions: {
+        celebration: boolean;
+        destroy: boolean;
+    }
 }
 
 const Dices = ({ rollValues }: Props) => {
