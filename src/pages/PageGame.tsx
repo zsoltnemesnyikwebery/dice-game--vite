@@ -14,16 +14,19 @@ export default function PageGame() {
         reset,
         clearActions,
     } = useGame(["Player 1", "Player 2"]);
-
     const activePlayer = game.players.find(p => p.isActive);
+    
+    const handleLockComplete = () => {
+        clearActions();
 
+        if (activePlayer?.actions.destroy) skip();
+    }
+    
     const isLocked = useActionLock({
         actions: activePlayer?.actions,
-        duration: 5000,
-        onComplete: clearActions,
+        duration: 2000,
+        onComplete: handleLockComplete,
     });
-
-    // console.log("Game State:", game);
 
     return (
         <section className="size-full">

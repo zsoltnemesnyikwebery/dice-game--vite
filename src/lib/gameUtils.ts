@@ -64,16 +64,12 @@ export const updateAfterRoll = (game: Game): Game => {
                         ...player.score,
                         current: 0,
                     },
-                    isActive: false,
                     actions: {
                         ...player.actions,
                         destroy: true,
                     }
                 }
-                : {
-                    ...player,
-                    isActive: true
-                }
+                : player
         );
 
         return {
