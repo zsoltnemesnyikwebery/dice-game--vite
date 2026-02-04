@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import { useGame } from "@/hooks/useGame";
 
 import GameBoard from "@/components/GameBoard";
 import Popup from "@/components/Popup";
+import { useActionLock } from "@/hooks/useActionLock";
 
 export default function PageGame() {
     const {
@@ -16,29 +16,14 @@ export default function PageGame() {
     } = useGame(["Player 1", "Player 2"]);
 
     const activePlayer = game.players.find(p => p.isActive);
-    const celebration = activePlayer?.actions.celebration;
 
-    const [isLocked, setIsLocked] = useState<boolean | undefined>(false)
+    const isLocked = useActionLock({
+        actions: activePlayer?.actions,
+        duration: 5000,
+        onComplete: clearActions,
+    });
 
-    useEffect(() => {
-
-        if (!celebration) return;
-
-        const lockTimer = setTimeout(() => {
-            setIsLocked(true);
-        }, 0);
-
-        const unlockTimer = setTimeout(() => {
-            setIsLocked(false);
-            clearActions();
-        }, 2000);
-
-        return () => {
-            clearTimeout(lockTimer);
-            clearTimeout(unlockTimer);
-        };
-    }, [celebration, clearActions]);
-
+    // console.log("Game State:", game);
 
     return (
         <section className="size-full">
