@@ -1,8 +1,9 @@
+import { useActionLock } from "@/hooks/useActionLock";
 import { useGame } from "@/hooks/useGame";
 
 import GameBoard from "@/components/GameBoard";
+import LightPillar from '@/components/LightPillar';
 import Popup from "@/components/Popup";
-import { useActionLock } from "@/hooks/useActionLock";
 
 export default function PageGame() {
     const {
@@ -30,6 +31,23 @@ export default function PageGame() {
 
     return (
         <section className="size-full">
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <LightPillar
+                    topColor="red"
+                    bottomColor="blue"
+                    intensity={1}
+                    rotationSpeed={0.3}
+                    glowAmount={0.002}
+                    pillarWidth={3}
+                    pillarHeight={0.4}
+                    noiseIntensity={0.5}
+                    pillarRotation={25}
+                    interactive={true}
+                    mixBlendMode="screen"
+                    quality="high"
+                />
+            </div>
+
             {/* Game Board */}
             <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} activePlayer={activePlayer} />
 

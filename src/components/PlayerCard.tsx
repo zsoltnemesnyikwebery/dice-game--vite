@@ -13,10 +13,10 @@ export default function PlayerCard({
 }: Player) {
     return (
         <div
-            className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl relative transition-all text-center ${
+            className={`playercard flex flex-col items-center justify-center gap-2 p-4 rounded-xl relative transition-all text-center ${
                 isActive ? "before:bg-red-500 before:size-5 before:absolute before:rounded-full before:-left-10 sm:before:-top-5 sm:before:left-1/2 sm:before:-translate-1/2 before:content-['']" : "opacity-15"
             }`}
-            style={{ backgroundColor: color }}
+            data-color={color}
         >
             <img
                 src={avatar}
@@ -31,7 +31,6 @@ export default function PlayerCard({
                 className={`relative flex flex-col items-center gap-2 p-4 rounded-xl transition-all ${
                     isActive ? "" : "opacity-15"
                 }`}
-                style={{ backgroundColor: color }}
             >
                 <span className="relative z-10 text-2xl font-mono">
                     {score.current}

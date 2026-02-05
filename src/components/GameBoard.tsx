@@ -17,9 +17,8 @@ interface Props {
 }
 
 const GameBoard = ({ game, handleRoll, handleSkip, isLocked, activePlayer }: Props) => {
-
     return (
-        <div className="w-full p-12 md:p-24 border rounded-4xl flex flex-col gap-6 items-center">
+        <div className="glassmorph w-full p-12 md:p-24 border rounded-4xl flex flex-col gap-6 items-center">
             {/* Total Score */}
             <TotalScore scores={{
                 player1: game.players[0].score.total,
