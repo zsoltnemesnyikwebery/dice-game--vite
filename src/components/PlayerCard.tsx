@@ -1,4 +1,7 @@
+import { AnimatePresence } from "framer-motion";
+
 import type { Player } from "@/models/types";
+import { DestroyParticles } from "./DestroyParticles";
 
 export default function PlayerCard({
     name,
@@ -6,6 +9,7 @@ export default function PlayerCard({
     color,
     isActive,
     score,
+    actions,
 }: Player) {
     return (
         <div
@@ -22,7 +26,26 @@ export default function PlayerCard({
                 className="rounded-full aspect-square w-auto max-h-[10vh] md:max-h-[20vh] min-h-12.5"
             />
             <h2 className="font-bold text-lg">{name}</h2>
-            <p className="text-2xl font-mono">{score.current}</p>
+            {/* SCORE */}
+            <div
+                className={`relative flex flex-col items-center gap-2 p-4 rounded-xl transition-all ${
+                    isActive ? "" : "opacity-15"
+                }`}
+                style={{ backgroundColor: color }}
+            >
+                <span className="relative z-10 text-2xl font-mono">
+                    {score.current}
+                </span>
+
+                <AnimatePresence>
+                    {actions.destroy && (
+                    <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+                        <DestroyParticles />
+                    </div>
+                    )}
+
+                </AnimatePresence>
+            </div>
         </div>
     );
 }
