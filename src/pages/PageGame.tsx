@@ -2,7 +2,7 @@ import { useActionLock } from "@/hooks/useActionLock";
 import { useGame } from "@/hooks/useGame";
 
 import GameBoard from "@/components/GameBoard";
-import LightPillar from '@/components/LightPillar';
+// import LightPillar from '@/components/LightPillar';
 import Popup from "@/components/Popup";
 
 export default function PageGame() {
@@ -31,7 +31,7 @@ export default function PageGame() {
 
     return (
         <section className="size-full">
-            <div className="absolute inset-0 z-0 pointer-events-none">
+            {/* <div className="absolute inset-0 z-0 pointer-events-none">
                 <LightPillar
                     topColor="red"
                     bottomColor="blue"
@@ -46,7 +46,7 @@ export default function PageGame() {
                     mixBlendMode="screen"
                     quality="high"
                 />
-            </div>
+            </div> */}
 
             {/* Game Board */}
             <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} activePlayer={activePlayer} />
