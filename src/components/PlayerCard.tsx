@@ -9,7 +9,7 @@ export default function PlayerCard({
     color,
     isActive,
     score,
-    actions,
+    roll,
 }: Player) {
     return (
         <div
@@ -37,12 +37,11 @@ export default function PlayerCard({
                 </span>
 
                 <AnimatePresence>
-                    {actions.destroy && (
-                    <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
-                        <DestroyParticles />
-                    </div>
+                    {roll?.type === "destroy" && (
+                        <div className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none">
+                            <DestroyParticles />
+                        </div>
                     )}
-
                 </AnimatePresence>
             </div>
         </div>
