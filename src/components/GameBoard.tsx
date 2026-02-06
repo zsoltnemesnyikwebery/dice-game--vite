@@ -26,17 +26,15 @@ const GameBoard = ({ game, handleRoll, handleSkip, isLocked, activePlayer }: Pro
             }} />
 
             <div
-                className={`grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr] gap-5 transition-all
-                    ${isLocked ? "opacity-50 pointer-events-none" : "opacity-100 pointer-events-auto"}
-                `}
+                className={`grid grid-rows-2 sm:grid-rows-1 sm:grid-cols-[1fr_3fr_1fr] gap-5 transition-all`}
             >
                 {game.players.map((player) => (
                     <PlayerCard key={player.id} {...player} />
                 ))}
 
                 {game.players.map(player =>
-                    player.actions.celebration &&
-                    player.rolls?.map((value, i) => (
+                    player.roll?.type === "celebration" &&
+                    player.roll?.dice?.map((value, i) => (
                         <motion.div
                             key={player.id + "fly" + i}
                             className="absolute z-50 text-xl font-bold"
@@ -65,10 +63,7 @@ const GameBoard = ({ game, handleRoll, handleSkip, isLocked, activePlayer }: Pro
 
                 <div className="flex flex-col items-center gap-5 max-sm:self-center  col-start-2 row-span-full">
                     {activePlayer && (
-                        <Dices
-                            rollValues={activePlayer.rolls}
-                            actions={activePlayer.actions}
-                        />
+                        <Dices roll={activePlayer?.roll} />
                     )}
                     <div className="flex flex-col gap-4">
                         <Button
@@ -78,7 +73,7 @@ const GameBoard = ({ game, handleRoll, handleSkip, isLocked, activePlayer }: Pro
                             Roll
                         </Button>
 
-                        {game.players.find((p) => p.isActive)?.rolls && (
+                        {game.players.find((p) => p.isActive)?.roll && (
                             <Button
                                 variant="outline"
                                 onClick={handleSkip}
