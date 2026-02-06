@@ -18,6 +18,7 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
         color: i === 0 ? "blue" : "red",
         isActive: i === 0,
         roll: undefined,
+        lastDice: null,
         score: {
             current: DEFAULT_SCORE,
             total: DEFAULT_SCORE,
@@ -67,6 +68,7 @@ export const calculateScore = (game: Game): Game => {
                     score: rollScore,
                     type,
                 },
+                lastDice: rollResult,
             }
             : player
     );
@@ -111,18 +113,6 @@ export const updateScore = (game: Game): Game => {
     };
 };
 
-
-export const clearPlayerActions = (game: Game): Game => ({
-    ...game,
-    players: game.players.map(player => ({
-        ...player,
-        actions: {
-            celebration: false,
-            destroy: false,
-        },
-    })),
-});
-
 /** END THE TURN */
 export const endTurn = (game: Game): Game => {
     const players = game.players.map((player, i) => {
@@ -130,7 +120,8 @@ export const endTurn = (game: Game): Game => {
             return {
                 ...player,
                 isActive: false,
-                rolls: undefined,
+                roll: undefined,
+                lastDice: null,
                 score: {
                     ...player.score,
                     total: player.score.total,

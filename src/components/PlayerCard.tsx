@@ -28,9 +28,7 @@ export default function PlayerCard({
             <h2 className="font-bold text-lg">{name}</h2>
             {/* SCORE */}
             <div
-                className={`relative flex flex-col items-center gap-2 p-4 rounded-xl transition-all ${
-                    isActive ? "" : "opacity-15"
-                }`}
+                className="relative flex flex-col items-center gap-2 p-4 rounded-xl transition-all"
             >
                 <span className="relative z-10 text-2xl font-mono">
                     {score.current}

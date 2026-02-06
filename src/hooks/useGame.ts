@@ -54,9 +54,9 @@ export const useGame = (playerNames: [string, string]) => {
     game,
     start,
     roll,
+    applyRoll,
     skip,
     newRound,
     reset,
-    applyRoll,
   };
 };

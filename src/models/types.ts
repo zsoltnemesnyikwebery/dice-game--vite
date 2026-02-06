@@ -15,6 +15,7 @@ export type Player = {
     score: number;
     type: RollType;
   };
+  lastDice: DiceRoll | null;
   score: {
     current: number;
     total: number;

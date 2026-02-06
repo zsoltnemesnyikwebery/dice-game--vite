@@ -1,20 +1,20 @@
-import type { Player } from "@/models/types"
+import type { Player, RollType } from "@/models/types"
 import Dice from "./Dice"
+import { DICE_COUNT } from "@/lib/constants";
 
 interface Props {
-    roll?: Player["roll"];
+    dice: Player["lastDice"];
+    type?: RollType;
 }
 
-const Dices = ({ roll }: Props) => {
-    const diceCount = roll?.dice.length ?? 2;
-
+const Dices = ({ dice, type }: Props) => {
     return (
         <div className="flex max-sm:flex-col max-sm:gap-2 gap-8">
-            {Array.from({ length: diceCount }).map((_, i) => (
+            {Array.from({ length: DICE_COUNT }).map((_, i) => (
                 <Dice
                     key={i}
-                    value={roll?.dice[i]}
-                    type={roll?.type}
+                    value={dice?.[i]}
+                    type={type}
                 />
             ))}
         </div>
