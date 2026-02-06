@@ -1,35 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
 export const useActionLock = ({
-    actions,
+    isActive,
     duration,
     onComplete,
 }: {
-    actions?: { celebration: boolean; destroy: boolean };
+    isActive: boolean;
     duration: number;
     onComplete: () => void;
 }) => {
     const [isLocked, setIsLocked] = useState(false);
-    const hasAction = !!actions?.celebration || !!actions?.destroy;
-
-    console.log(actions);
 
     useEffect(() => {
-        if (!hasAction) return;
+        if (!isActive) return;
 
-        const lockTimer = setTimeout(() => {
-            setIsLocked(true);
-        }, 0);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsLocked(true);
 
-        const unlockTimer = setTimeout(() => {
+        const timer = setTimeout(() => {
             setIsLocked(false);
             onComplete();
         }, duration);
-        return () => {
-            clearTimeout(lockTimer);
-            clearTimeout(unlockTimer);
-        };
-    }, [hasAction, duration, onComplete]);
+
+        return () => clearTimeout(timer);
+    }, [isActive, duration, onComplete]);
 
     return isLocked;
 };

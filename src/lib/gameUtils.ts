@@ -101,7 +101,7 @@ export const updateScore = (game: Game): Game => {
                 ...player.score,
                 current: player.score.current + player.roll.score,
             },
-            // roll: undefined,
+            roll: undefined,
         };
     });
 
