@@ -6,9 +6,9 @@ import {
   createNewGame,
   endTurn,
   startGame,
-  updateAfterRoll,
+  calculateScore,
   startNewRound,
-  clearPlayerActions,
+  updateScore,
 } from "@/lib/gameUtils";
 
 export const useGame = (playerNames: [string, string]) => {
@@ -22,11 +22,11 @@ export const useGame = (playerNames: [string, string]) => {
     setGame(prev => {
       if (prev.status !== GAME_STATUS.STARTED) return prev;
 
-      const updatedGame = updateAfterRoll(prev);
+      const updatedGame = calculateScore(prev);
       const isWinner = checkWinner(updatedGame);
 
       if (!isWinner) return updatedGame;
-      
+
       return {
         ...updatedGame,
         status: GAME_STATUS.ENDED,
@@ -35,8 +35,8 @@ export const useGame = (playerNames: [string, string]) => {
     });
   };
 
-  const clearActions = () =>
-    setGame(prev => clearPlayerActions(prev));
+  const applyRoll = () =>
+    setGame(prev => updateScore(prev));
 
   const skip = () =>
     setGame(prev => {
@@ -57,6 +57,6 @@ export const useGame = (playerNames: [string, string]) => {
     skip,
     newRound,
     reset,
-    clearActions,
+    applyRoll,
   };
 };
