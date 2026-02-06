@@ -5,9 +5,9 @@ import {
     DEFAULT_MAX_SCORE,
     GAME_STATUS,
     DICE_COUNT,
-    DICE_SIDES,
+    // DICE_SIDES,
 } from "@/lib/constants";
-import type { DiceRoll, DiceValue, Player } from "@/models/types";
+import type { DiceRoll, DiceValue, Player, RollType } from "@/models/types";
 
 /** INIT NEW GAME */
 export const createNewGame = (playerNames: [string, string]): Game => ({
@@ -17,14 +17,10 @@ export const createNewGame = (playerNames: [string, string]): Game => ({
         avatar: `https://picsum.photos/300?random=${i}`,
         color: i === 0 ? "blue" : "red",
         isActive: i === 0,
-        rolls: undefined,
+        roll: undefined,
         score: {
             current: DEFAULT_SCORE,
             total: DEFAULT_SCORE,
-        },
-        actions: {
-            celebration: false,
-            destroy: false,
         },
     })),
     status: GAME_STATUS.NOT_STARTED,
@@ -44,56 +40,32 @@ export const rollDice = (): DiceRoll => {
     return Array.from({ length: DICE_COUNT }, rollSingleDice) as DiceRoll;
 };
 
-export const updateAfterRoll = (game: Game): Game => {
+const isAll = (rolls: DiceRoll, value: DiceValue) => rolls.every((v) => v === value);
+
+/** CALCULATE SCORE */
+export const calculateScore = (game: Game): Game => {
     const rollResult = rollDice();
+    let rollScore = rollResult.reduce((a, b) => a + b, 0)
     const activeIndex = game.players.findIndex(p => p.isActive);
 
-    const isAll = (rolls: DiceRoll, value: DiceValue) => rolls.every((v) => v === value);
+    let type: RollType = "normal";
 
-    /* SPECIAL ROLLS  */
-    // 1.) if all ones, reset current score to 0
-    const allOnes = isAll(rollResult, 1);
-
-    if (allOnes) {
-        const players = game.players.map((player, i) =>
-            i === activeIndex
-                ? {
-                    ...player,
-                    rolls: rollResult,
-                    score: {
-                        ...player.score,
-                        current: 0,
-                    },
-                    actions: {
-                        ...player.actions,
-                        destroy: true,
-                    }
-                }
-                : player
-        );
-
-        return {
-            ...game,
-            players,
-        };
+    if (isAll(rollResult, 1)) {
+        type = "destroy";
+        rollScore = 0;
+    } else if (isAll(rollResult, 6)) {
+        type = "celebration";
+        rollScore = rollScore * 2;
     }
-
-    // 2.) if all 6s, double the score, otherwise normal score
-    const allSixes = isAll(rollResult, 6);
-    const rollScore = rollResult.reduce((a, b) => a + b, 0) * (isAll(rollResult, DICE_SIDES) ? 2 : 1);
 
     const players = game.players.map((player, i) =>
         i === activeIndex
             ? {
                 ...player,
-                rolls: rollResult,
-                score: {
-                    ...player.score,
-                    current: player.score.current + rollScore,
-                },
-                actions: {
-                    ...player.actions,
-                    celebration: allSixes
+                roll: {
+                    dice: rollResult,
+                    score: rollScore,
+                    type,
                 },
             }
             : player
@@ -104,6 +76,41 @@ export const updateAfterRoll = (game: Game): Game => {
         players,
     };
 };
+
+/** APPLY ROLL RESULT */
+export const updateScore = (game: Game): Game => {
+    const activeIndex = game.players.findIndex(p => p.isActive);
+
+    const players = game.players.map((player, i) => {
+        if (i !== activeIndex || !player.roll) return player;
+
+        if (player.roll.type === "destroy") {
+            return {
+                ...player,
+                score: {
+                    ...player.score,
+                    current: 0,
+                },
+                roll: undefined,
+            };
+        }
+
+        return {
+            ...player,
+            score: {
+                ...player.score,
+                current: player.score.current + player.roll.score,
+            },
+            // roll: undefined,
+        };
+    });
+
+    return {
+        ...game,
+        players,
+    };
+};
+
 
 export const clearPlayerActions = (game: Game): Game => ({
     ...game,
