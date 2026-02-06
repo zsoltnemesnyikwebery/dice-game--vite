@@ -3,6 +3,7 @@ import { useGame } from "@/hooks/useGame";
 
 import GameBoard from "@/components/GameBoard";
 import Popup from "@/components/Popup";
+import GradientBackground from "@/components/GradientBackground";
 
 export default function PageGame() {
     const {
@@ -34,6 +35,8 @@ export default function PageGame() {
 
     return (
         <section className="size-full">
+            <GradientBackground colors={["#0000ff", "#ff0000"]} />
+
             {/* Game Board */}
             <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} activePlayer={activePlayer} />
 

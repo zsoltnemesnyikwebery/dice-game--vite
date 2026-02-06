@@ -1,6 +1,25 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@keyframes blob {
+  0% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  30% {
+    rotate: 40deg;
+  }
+
+  50% {
+    transform: translate(300px, 390px) scale(1.1);
+  }
+
+  80% {
+    rotate: 90deg;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -52,6 +71,7 @@
 
 a,
 *[type="button"] {
+
   &:hover,
   &:focus {
     opacity: .5;
@@ -78,6 +98,11 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+@theme {
+  --animate-blob: blob 8s infinite cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  --animate-blob-reverse: blob 10s infinite cubic-bezier(0.215, 0.61, 0.355, 1) reverse;
 }
 
 @theme inline {
@@ -177,7 +202,7 @@ h1 {
     -webkit-backdrop-filter: blur(26px);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.25),
       inset 0 -1px 0 rgba(255, 255, 255, 0.1),
@@ -192,12 +217,10 @@ h1 {
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0.25),
-        rgba(255, 255, 255, 0.15),
-        transparent
-      );
+      background: linear-gradient(90deg,
+          rgba(255, 255, 255, 0.25),
+          rgba(255, 255, 255, 0.15),
+          transparent);
     }
 
     &::after {
@@ -207,12 +230,10 @@ h1 {
       left: 0;
       width: 1px;
       height: 100%;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.25),
-        rgba(255, 255, 255, 0.15),
-        transparent
-      );
+      background: linear-gradient(180deg,
+          rgba(255, 255, 255, 0.25),
+          rgba(255, 255, 255, 0.15),
+          transparent);
     }
 
     .playercard {
@@ -231,12 +252,10 @@ h1 {
         left: 0;
         right: 0;
         height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.1),
-          transparent
-        );
+        background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.1),
+            transparent);
       }
 
       &::after {
@@ -246,57 +265,47 @@ h1 {
         left: 0;
         width: 1px;
         height: 100%;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, .001),
-          transparent,
-          rgba(255, 255, 255, 0.3)
-        );
+        background: linear-gradient(180deg,
+            rgba(255, 255, 255, .001),
+            transparent,
+            rgba(255, 255, 255, 0.3));
       }
 
       &:nth-child(1) {
-        background: radial-gradient(
-          circle at 50% 50%,
-          rgba(0, 0, 255, .25),
-          rgba(0,0,0, .3)
-        );
+        background: radial-gradient(circle at 50% 50%,
+            rgba(0, 0, 255, .25),
+            rgba(0, 0, 0, .3));
         border-color: rgba(0, 0, 255, .1);
-        box-shadow: 
+        box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(0, 0, 255, 0.25),
           inset 0 -1px 0 rgba(0, 0, 255, 0.1),
           inset 0 0 0px 0px rgba(0, 0, 255, 0);
 
         &::after {
-          background: linear-gradient(
-            180deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent
-          );
+          background: linear-gradient(180deg,
+              transparent,
+              rgba(255, 255, 255, 0.3),
+              transparent);
         }
       }
 
       &:nth-child(2) {
-        background: radial-gradient(
-          circle at 50% 50%,
-          rgba(255, 0, 0, .15),
-          rgba(0,0,0, .3)
-        );
+        background: radial-gradient(circle at 50% 50%,
+            rgba(255, 0, 0, .15),
+            rgba(0, 0, 0, .3));
         border-color: rgba(255, 0, 0, .1);
-        box-shadow: 
+        box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(255, 0, 0, 0.25),
           inset 0 -1px 0 rgba(255, 0, 0, 0.1),
           inset 0 0 0px 0px rgba(255, 0, 0, 0);
 
         &::after {
-          background: linear-gradient(
-            180deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent
-          );
+          background: linear-gradient(180deg,
+              transparent,
+              rgba(255, 255, 255, 0.3),
+              transparent);
         }
       }
     }
