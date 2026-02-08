@@ -1,7 +1,7 @@
 const GradientBackground = ({colors}: {colors: [string, string]}) => {
   return (
     <div 
-        className="fixed w-screen h-screen inset-0 overflow-x-hidden"
+        className="fixed w-screen h-screen inset-0 overflow-hidden"
         style={{
             background: `linear-gradient(135deg, ${colors[0]}, rgba(255,255,255,.5), ${colors[1]})`
         }}
