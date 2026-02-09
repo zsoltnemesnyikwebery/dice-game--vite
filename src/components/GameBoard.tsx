@@ -90,7 +90,7 @@ const GameBoard = ({ game, handleRoll, handleSkip, isLocked, activePlayer }: Pro
                             ease: "easeInOut",
                         }}
                     >
-                        12
+                        {activePlayer.roll.score}
                     </motion.div>
                 )}
             </div>
