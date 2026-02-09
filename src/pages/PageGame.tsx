@@ -35,7 +35,6 @@ export default function PageGame() {
 
     return (
         <section className="size-full pt-6 pb-12 md:py-12">
-            {/* <GradientBackground colors={["#6e45e2", "#88d3ce"]} /> */}
             <GradientBackground colors={["#6e45e2", "#88d3ce"]} />
 
             {/* Game Board */}

@@ -8,7 +8,7 @@ interface Props {
 const TotalScore = ({scores}: Props) => {
     return (
         <>
-            <div className="flex flex-row justify-center items-center gap-4">
+            <div className="flex flex-row justify-center items-center gap-4 text-[clamp(2rem,5vw,2.5rem)] font-bold">
                 <span>
                     {scores.player1}
                 </span>
