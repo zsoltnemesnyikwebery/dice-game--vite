@@ -3,7 +3,7 @@ import { useGame } from "@/hooks/useGame";
 
 import GameBoard from "@/components/GameBoard";
 import Popup from "@/components/Popup";
-import GradientBackground from "@/components/GradientBackground";
+// import GradientBackground from "@/components/GradientBackground";
 
 export default function PageGame() {
     const {
@@ -29,13 +29,13 @@ export default function PageGame() {
     
     const isLocked = useActionLock({
         isActive: !!activePlayer?.roll,
-        duration: 500,
+        duration: activePlayer?.roll?.type === "celebration" ? 2000 : 500,
         onComplete: handleLockComplete,
     });
 
     return (
         <section className="size-full pt-6 pb-12 md:py-12">
-            <GradientBackground colors={["#6e45e2", "#88d3ce"]} />
+            {/* <GradientBackground colors={["#6e45e2", "#88d3ce"]} /> */}
 
             {/* Game Board */}
             <GameBoard game={game} handleRoll={roll} handleSkip={skip} isLocked={isLocked} activePlayer={activePlayer} />
