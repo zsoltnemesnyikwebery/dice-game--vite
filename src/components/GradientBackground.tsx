@@ -1,25 +1,19 @@
-const GradientBackground = ({colors}: {colors: [string, string]}) => {
-  return (
-    <div 
-        className="fixed w-screen h-screen inset-0 overflow-hidden"
-        style={{
-            background: `linear-gradient(135deg, ${colors[0]}, rgba(255,255,255,.5), ${colors[1]})`
-        }}
-    >
-        <span 
-            className="absolute left-[20%] top-[10%] h-[70vh] w-[70vh] origin-center animate-blob rounded-full blur-[50px]"
-            style={{
-                background: `linear-gradient(135deg, ${colors[0]}, rgba(255,255,255,.5), ${colors[1]})`
-            }} 
-        />
-        <span 
-            className="absolute left-[40%] top-[30%] h-[70vh] w-[70vh] origin-center animate-blob-reverse rounded-full blur-[50px]"
-            style={{
-                background: `linear-gradient(135deg, ${colors[0]}, rgba(255,255,255,.5), ${colors[1]})`
-            }} 
-        />
-
-    </div>
-  )
+interface GradientBackgroundProps {
+  colors: [string, string];
 }
-export default GradientBackground
+
+export default function GradientBackground({ colors }: GradientBackgroundProps) {
+  return (
+    <div
+        className={`
+            fixed inset-0 z-0 w-screen h-screen overflow-hidden
+            bg-size-[180%_180%]
+            will-change-transform
+            animate-[slowPulse_28s_ease-in-out_infinite]
+        `}
+        style={{
+            backgroundImage: `radial-gradient(circle at 30% 70%, ${colors[0]}, transparent 40%, ${colors[1]} 80%)`,
+        }}
+    />
+  );
+}
