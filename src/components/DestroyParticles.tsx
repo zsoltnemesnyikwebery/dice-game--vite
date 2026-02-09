@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export function DestroyParticles() {
   return (
     <>
-      {Array.from({ length: 25 }).map((_, i) => (
+      {Array.from({ length: 50 }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full"
