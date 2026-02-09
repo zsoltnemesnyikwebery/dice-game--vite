@@ -5,6 +5,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DEFAULT_MAX_SCORE } from "@/lib/constants";
 
 export const RulesDialog = () => {
   return (
@@ -21,7 +22,9 @@ export const RulesDialog = () => {
         <ul className="space-y-2 text-sm">
           <li>🎲 Dobáskor két kockával dobsz</li>
           <li>➕ Az értékek összeadódnak</li>
-          <li>🏆 Aki előbb eléri az 50 pontot, nyer</li>
+          <li>🎉 Ha az összes kockával 6-ost dobsz, az dupla pontot ér</li>
+          <li>❌ Ha az összes kockával 1-est dobsz, az összes pontszámod nullázódik</li>
+          <li>🏆 Aki előbb eléri az {DEFAULT_MAX_SCORE} pontot, nyer</li>
         </ul>
       </DialogContent>
     </Dialog>
